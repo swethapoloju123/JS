@@ -1,0 +1,12 @@
+{
+    "presets":[
+        ["env",{
+            "tagets":{
+                "browser":[
+                    "last 5 versions" ,
+                    "ie >= 8"
+                ]
+            }
+        }]
+    ]
+}
