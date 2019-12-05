@@ -2,6 +2,7 @@ import Search from './models/Search';
 import * as searchView from './views/searchView';
 import  Recipe from './models/Recipe';
 import {elements,renderLoader,clearLoader} from './views/base';
+import * as recipeView from './views/recipeView';
 /**
  * SEARCH CONTROLLER
  */
@@ -49,15 +50,22 @@ elements.searchresPage.addEventListener('click',e=>{
     const id = window.location.hash.replace('#','');
     if(id){
         //prepare the UI
-
+        recipeView.clearRecipe();
+        renderLoader(elements.recipe);
     //get the Recipe
         state.recipe = new Recipe(id);
         try{
-            await state.recipe.getRecipe();
+           
+           await state.recipe.getRecipe();
+           
+           state.recipe.parseIngredients();
      //get the servings n time
        state.recipe.calcServing();
        state.recipe.calcTime();
     //render the recipe
+    clearLoader();
+   
+    recipeView.renderRecipe(state.recipe);
     console.log(state.recipe);
         }catch(error){
             alert(`something wrong getting recipe ${error}`);
